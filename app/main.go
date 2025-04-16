@@ -13,7 +13,8 @@ import (
 	"fmt"
 	"rsc.io/quote"
 	"app/cloud"
-	"app/client"
+	"github.com/fatih/color"
+	// "app/client"
 )	
 
 func hamid(){
@@ -21,18 +22,37 @@ func hamid(){
 
 }
 
-func main(){
+func main() {
+	// Gopher ASCII Art
+	gopher := `
+           ,_---~~~~~----._
+  _,,_,*^____      _____''*g*\"*,
+ / __/ /'     ^.  /      \ ^@q   f
+[  @f | @))    |  | @))   l  0 _/
+ \'/   \~____ / __ \_____/    \
+  |           _l__l_           I
+  }          [______]           |
+  ]            | | |            |
+  ]             ~ ~             |
+  |                            |
+   |                           |
+`
+
+	color.Blue(gopher)
+	color.Yellow("Hey Developer 👋 Welcome to the Cloud Pancake ☁️\n")
+	color.Magenta("Please Enter a number from 1 --- 4 to choose your provider:")
+	color.Green("1 --> AWS")
+	color.Cyan("2 --> GCP")
+	color.HiMagenta("3 --> OCI")
+	color.Red("4 --> Azure")
+	color.White("--------------------------------------------------------")
+
 	var input string
-
-	fmt.Print("Hey Developer Welcome to the provider Please Enter a number from 1 --- 4:\n ");
-	fmt.Print("1 --> aws \n 2--> Gcp \n 3 --> OCI \n 4 --> Azure\n\r " );
-	fmt.Println("--------------------------------------------------------")
 	fmt.Scanln(&input)
-	samir := client.thisis(1);
-	fmt.Println(samir);
 
-	
-	var provider string = cloud.ChooseProvider(input);
-	fmt.Println(provider);
-	hamid();
+	provider := cloud.ChooseProvider(input)
+	color.Yellow(provider)
+
+	cloud.CreateIaC(provider)
+	hamid()
 }
