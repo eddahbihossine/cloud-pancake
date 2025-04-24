@@ -14,8 +14,9 @@ import (
 	"rsc.io/quote"
 	"app/cloud"
 	"github.com/fatih/color"
+	// "app/archi"
 	// "app/client"
-)	
+	)	
 
 func hamid(){
 	fmt.Println(quote.Go());
@@ -23,7 +24,6 @@ func hamid(){
 }
 
 func main() {
-	// Gopher ASCII Art
 	gopher := `
            ,_---~~~~~----._
   _,,_,*^____      _____''*g*\"*,
@@ -49,7 +49,7 @@ func main() {
 
 	var input string
 	fmt.Scanln(&input)
-
+	// hamid := archi.hello();
 	provider := cloud.ChooseProvider(input)
 	color.Yellow(provider)
 

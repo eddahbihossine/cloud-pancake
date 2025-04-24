@@ -467,20 +467,27 @@ func CreateIaC(provider string) string {
 	mainTF := fmt.Sprintf(`# Terraform configuration for %s
 
 provider "%s" {
-  # Example configuration for %s provider
-  region = "us-east-1"
+# Example configuration for %s provider
+region = "us-east-1"
 }
 
 resource "%s_instance" "example" {
-  ami           = "ami-123456"
-  instance_type = "t2.micro"
+ami           = "ami-123456"
+instance_type = "t2.micro"
 }
 
 output "%s_instance_ip" {
-  value = "%s_instance.example.public_ip"
+value = "%s_instance.example.public_ip"
 }`, provider, provider, provider, provider, provider, provider)
+	
+	variableTF := fmt.Sprintf(`#hello les variables hadu `)
+	outputsTF := fmt.Sprintf(`#hello hadu huma l'outputs`)
+	Terraformtfstats := fmt.Sprintf(`#hello hada huwa lfile fin atvisualisi state dial deployed resources `)
 
 	// Write main.tf file
+	err = os.WriteFile(fmt.Sprintf("%s/variables.tf", dir), []byte(variableTF), 0644)
+	err = os.WriteFile(fmt.Sprintf("%s/terraform.tfstat", dir), []byte(Terraformtfstats), 0644)
+	err = os.WriteFile(fmt.Sprintf("%s/outputs.tf", dir), []byte(outputsTF), 0644)
 	err = os.WriteFile(fmt.Sprintf("%s/main.tf", dir), []byte(mainTF), 0644)
 	if err != nil {
 		return "❌ Failed to create main.tf"
