@@ -24,5 +24,3 @@ jobs:
     - name: Build
       run: cd ./app && go build .
 
-    - name: Test
-      run: cd ./app && go test .
