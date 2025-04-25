@@ -464,6 +464,28 @@ func CreateIaC(provider string) string {
 				return "❌ Failed to write architecture file"
 			}
 
+
+	ociTF := fmt.Sprintf(`# Configure the OCI provider with an API Key
+	# tenancy_ocid is the compartment OCID for the root compartment
+	provider "oci" {
+	  tenancy_ocid = var.tenancy_ocid
+	  user_ocid = var.user_ocid
+	  fingerprint = var.fingerprint
+	  private_key_path = var.private_key_path
+	  region = var.region
+	}
+	
+	# Get a list of Availability Domains
+	data "oci_identity_availability_domains" "ads" {
+	  compartment_id = var.tenancy_ocid
+	}
+	
+	# Output the result
+	output "show-ads" {
+	  value = data.oci_identity_availability_domains.ads.availability_domains
+	}
+	`)
+
 	mainTF := fmt.Sprintf(`# Terraform configuration for %s
 
 provider "%s" {
@@ -484,11 +506,16 @@ value = "%s_instance.example.public_ip"
 	outputsTF := fmt.Sprintf(`#hello hadu huma l'outputs`)
 	Terraformtfstats := fmt.Sprintf(`#hello hada huwa lfile fin atvisualisi state dial deployed resources `)
 
-	// Write main.tf file
 	err = os.WriteFile(fmt.Sprintf("%s/variables.tf", dir), []byte(variableTF), 0644)
 	err = os.WriteFile(fmt.Sprintf("%s/terraform.tfstat", dir), []byte(Terraformtfstats), 0644)
 	err = os.WriteFile(fmt.Sprintf("%s/outputs.tf", dir), []byte(outputsTF), 0644)
-	err = os.WriteFile(fmt.Sprintf("%s/main.tf", dir), []byte(mainTF), 0644)
+
+	if(provider !="oci") {
+		err = os.WriteFile(fmt.Sprintf("%s/main.tf", dir), []byte(mainTF), 0644)
+	}
+	err = os.WriteFile(fmt.Sprintf("%s/main.tf",dir),[]byte(ociTF),0644)
+
+	
 	if err != nil {
 		return "❌ Failed to create main.tf"
 	}
