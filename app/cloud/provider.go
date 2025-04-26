@@ -510,10 +510,12 @@ value = "%s_instance.example.public_ip"
 	err = os.WriteFile(fmt.Sprintf("%s/terraform.tfstat", dir), []byte(Terraformtfstats), 0644)
 	err = os.WriteFile(fmt.Sprintf("%s/outputs.tf", dir), []byte(outputsTF), 0644)
 
-	if(provider !="oci") {
+	if(provider != "OCI") {
 		err = os.WriteFile(fmt.Sprintf("%s/main.tf", dir), []byte(mainTF), 0644)
+		return "Done"
 	}
 	err = os.WriteFile(fmt.Sprintf("%s/main.tf",dir),[]byte(ociTF),0644)
+	
 
 	
 	if err != nil {
